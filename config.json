@@ -1,0 +1,13 @@
+{
+    "bot_token": "",
+    "start_message_url": "https://discord.com/channels/XXXXXXXXXXXXXXXXXX/XXXXXXXXXXXXXXXXXX/XXXXXXXXXXXXXXXXXX",
+    "time_limit": 5,
+    "max_wrong_answers": 0,
+    "question_count": 2,
+    "failure_cooldown": 1,
+    "cooldown_multiplier": 2,
+    "role_ids": {
+        "add": "XXXXXXXXXXXXXXXXXX",
+        "remove": ""
+    }
+}

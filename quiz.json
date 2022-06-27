@@ -1,0 +1,25 @@
+[
+    {
+        "question": "The answer to this question is Blue.",
+        "correct": "Blue",
+        "wrong": [
+            "Green",
+            "Red",
+            "Yellow",
+            "Purple"
+        ]
+    },
+    {
+        "question": "The answer to this question is False.",
+        "correct": "False",
+        "wrong": ["True"]
+    },
+    {
+        "question": "The answer to this question is X.",
+        "correct": "X",
+        "wrong": [
+            "Y",
+            "Z"
+        ]
+    }
+]
