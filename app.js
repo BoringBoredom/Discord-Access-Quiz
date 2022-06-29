@@ -268,16 +268,27 @@ async function initiateQuiz(messageReaction, user) {
 
     const guildMemberRoleManager = (await messageReaction.message.guild.members.fetch(user.id)).roles;
 
+    let alreadyAdded = false;
+    let alreadyRemoved = false;
+
     if (
         config.role_ids.add.trim() &&
         guildMemberRoleManager.cache.some(r => r.id === config.role_ids.add)
     ) {
-        return;
+        alreadyAdded = true;
     }
 
     if (
         config.role_ids.remove.trim() &&
         !guildMemberRoleManager.cache.some(r => r.id === config.role_ids.remove)
+    ) {
+        alreadyRemoved = true;
+    }
+
+    if (
+        (alreadyAdded && alreadyRemoved) ||
+        (alreadyAdded && !config.role_ids.remove.trim()) ||
+        (alreadyRemoved && !config.role_ids.add.trim())
     ) {
         return;
     }
@@ -301,7 +312,7 @@ async function initiateQuiz(messageReaction, user) {
     }
 
     let currentQuestion = quiz[questionIndices.shift()];
-    const timeLimit = Date.now() + config.time_limit * 60000
+    const timeLimit = Date.now() + config.time_limit * 60000;
 
     try {
         var quizMessage = await user.send(getQuestionMessage(currentQuestion, timeLimit));
@@ -362,11 +373,11 @@ async function initiateQuiz(messageReaction, user) {
     writeFileSync("cooldowns.json", JSON.stringify(cooldowns, null, 4));
 
     try {
-        if (config.role_ids.add.trim()) {
+        if (config.role_ids.add.trim() && !alreadyAdded) {
             await guildMemberRoleManager.add(await messageReaction.message.guild.roles.fetch(config.role_ids.add));
         }
 
-        if (config.role_ids.remove.trim()) {
+        if (config.role_ids.remove.trim() && !alreadyRemoved) {
             await guildMemberRoleManager.remove(await messageReaction.message.guild.roles.fetch(config.role_ids.remove));
         }
     }
